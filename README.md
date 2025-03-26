@@ -21,7 +21,7 @@ Con hasta **8 jugadores**, el juego se basa en una secuencia de turnos, donde ca
 ## Tecnologías Utilizadas 🔧
 
 - **Backend**: PHP, Symfony (MVC)
-- **Frontend**: HTML, JavaScript, Tailwind CSS (o Bootstrap si prefieres)
+- **Frontend**: HTML, JavaScript, Tailwind o Bootstrap , CSS
 - **Base de Datos**: MySQL (para gestionar jugadores, cartas y reglas del juego)
 - **Comunicaciones en Tiempo Real**: AJAX o WebSockets (dependiendo de la implementación final)
 
