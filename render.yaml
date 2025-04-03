@@ -1,20 +1,28 @@
-   services:
-     - type: web
-       name: cards-and-shots
-       env: docker
-       plan: free
-       envVars:
-         - key: APP_ENV
-           value: prod
-         - key: APP_SECRET
-           value: changeme123
-         - key: DATABASE_URL
-           fromService:
-             type: mysql
-             name: cardnshots-mysql
-             property: connectionString
+services:
+  - type: web
+    name: cards-and-shots
+    env: docker
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_SECRET
+        value: changeme123
+      - key: DATABASE_URL
+        value: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:3306/${MYSQL_DATABASE}
+      - key: MYSQL_DATABASE
+        value: cardnshots
+      - key: MYSQL_USER
+        value: mysql
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_HOST
+        fromService:
+          name: cardnshots-mysql
+          type: mysql
+          property: host
 
-     - type: mysql
-       name: cardnshots-mysql
-       ipAllowList: [] # permitir todas las IPs
-       plan: free # o el plan que prefieras
+  - type: mysql
+    name: cardnshots-mysql
+    ipAllowList: []
+    plan: free
