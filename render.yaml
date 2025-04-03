@@ -1,10 +1,20 @@
-services:
-  - type: web
-    name: cards-and-shots
-    env: docker
-    plan: free
-    envVars:
-      - key: APP_ENV
-        value: prod
-      - key: APP_SECRET
-        value: changeme123
+   services:
+     - type: web
+       name: cards-and-shots
+       env: docker
+       plan: free
+       envVars:
+         - key: APP_ENV
+           value: prod
+         - key: APP_SECRET
+           value: changeme123
+         - key: DATABASE_URL
+           fromService:
+             type: mysql
+             name: cardnshots-mysql
+             property: connectionString
+
+     - type: mysql
+       name: cardnshots-mysql
+       ipAllowList: [] # permitir todas las IPs
+       plan: free # o el plan que prefieras
