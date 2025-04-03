@@ -1,20 +1,18 @@
 services:
   - type: web
-    name: cards-and-shots-dev
+    name: cards-and-shots
     runtime: docker
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php bin/console cache:clear --env=prod
-    startCommand: symfony server:start --no-tls --port=$PORT
     envVars:
       - key: APP_ENV
-        value: dev
+        value: prod
+      - key: APP_DEBUG
+        value: "0"
       - key: APP_SECRET
         generateValue: true
       - key: DATABASE_URL
         value: mysql://root:jgPyYLJkcKnJAiESzAjQjknHMxRDQEia@turntable.proxy.rlwy.net:12815/railway
       - key: MAILER_DSN
         value: null://null
-    healthCheckPath: /test-db
+    healthCheckPath: /
     autoDeploy: true
-    branch: developing 
+    branch: main

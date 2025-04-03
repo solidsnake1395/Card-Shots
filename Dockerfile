@@ -9,18 +9,16 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    libzip-dev
+    libzip-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Limpiar caché
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Instalar extensiones PHP
+# Instalar extensiones PHP necesarias
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Obtener Composer
+# Obtener Composer desde imagen oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Crear usuario no root
+# Crear usuario sin privilegios
 RUN useradd -G www-data,root -u 1000 -d /home/appuser appuser \
     && mkdir -p /home/appuser/.composer \
     && chown -R appuser:appuser /home/appuser
@@ -31,29 +29,29 @@ WORKDIR /var/www
 # Copiar composer.json y composer.lock
 COPY composer.json composer.lock ./
 
-# Instalar dependencias como root
-RUN composer install --no-scripts --no-autoloader
+# Instalar dependencias
+RUN composer install --no-dev --optimize-autoloader --classmap-authoritative
 
-# Copiar el resto de archivos
+# Copiar el resto del proyecto
 COPY . .
 
-# Crear directorios necesarios y establecer permisos
+# Crear carpetas necesarias y dar permisos
 RUN mkdir -p var/cache var/log \
-    && chown -R appuser:appuser var \
+    && chown -R appuser:appuser var vendor \
     && chmod -R 775 var
 
-# Cambiar al usuario no root
+# Limpiar caché de Symfony (modo prod)
+RUN php bin/console cache:clear --env=prod || true
+
+# Cambiar a usuario limitado
 USER appuser
 
-# Optimizar autoloader
-RUN composer dump-autoload --optimize
-
-# Configurar variables de entorno
+# Configurar entorno
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
-# Exponer el puerto
+# Exponer puerto
 EXPOSE ${PORT:-8000}
 
-# Comando para iniciar la aplicación
-CMD ["php", "-S", "0.0.0.0:${PORT:-8000}", "-t", "public"] 
+# Comando de inicio
+CMD ["php", "-S", "0.0.0.0:${PORT}", "-t", "public"]
