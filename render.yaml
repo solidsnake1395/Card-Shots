@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: cards-and-shots-dev
+    runtime: docker
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php bin/console cache:clear --env=prod
+    startCommand: symfony server:start --no-tls --port=$PORT
+    envVars:
+      - key: APP_ENV
+        value: dev
+      - key: APP_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cards-and-shots-dev-db
+          property: connectionString
+      - key: MAILER_DSN
+        value: null://null
+    healthCheckPath: /test-db
+    autoDeploy: true
+    branch: developing
+
+databases:
+  - name: cards-and-shots-dev-db
+    databaseName: cards_and_shots_dev
+    user: cards_and_shots_dev_user
+    plan: free 
