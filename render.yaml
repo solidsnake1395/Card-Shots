@@ -9,9 +9,9 @@ services:
       - key: APP_ENV
         value: prod
       - key: APP_SECRET
-        value: changeme123
+        value: castillo69
       - key: DATABASE_URL
-        value: mysql://root:root@host.docker.internal:3306/cardnshots
+        value: mysql://root:root@cardnshots-mysql:3306/cardnshots
       - key: MESSENGER_TRANSPORT_DSN
         value: doctrine://default?auto_setup=0
       - key: MAILER_DSN
@@ -21,3 +21,8 @@ services:
     name: cardnshots-mysql
     ipAllowList: []
     plan: free
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        value: root
+      - key: MYSQL_DATABASE
+        value: cardnshots
