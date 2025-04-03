@@ -13,7 +13,7 @@ WORKDIR /app
 COPY . /app
 
 # Instala dependencias
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # Expone el puerto para PHP server
 EXPOSE 8000
