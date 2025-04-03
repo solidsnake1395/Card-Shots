@@ -4,25 +4,17 @@ services:
     env: docker
     plan: free
     buildCommand: composer install --no-dev --optimize-autoloader
-    startCommand: php -S 0.0.0.0:8000 -t public
+    startCommand: |
+      php bin/console doctrine:migrations:migrate --no-interaction
+      php -S 0.0.0.0:8000 -t public
     envVars:
       - key: APP_ENV
         value: prod
       - key: APP_SECRET
-        value: castillo69
+        value: changeme123
       - key: DATABASE_URL
-        value: mysql://root:root@cardnshots-mysql:3306/cardnshots
+        sync: false
       - key: MESSENGER_TRANSPORT_DSN
         value: doctrine://default?auto_setup=0
       - key: MAILER_DSN
         value: null://null
-
-  - type: mysql
-    name: cardnshots-mysql
-    ipAllowList: []
-    plan: free
-    envVars:
-      - key: MYSQL_ROOT_PASSWORD
-        value: root
-      - key: MYSQL_DATABASE
-        value: cardnshots
