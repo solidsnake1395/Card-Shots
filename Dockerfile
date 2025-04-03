@@ -17,8 +17,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # Instalar extensiones de PHP
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Obtener Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Instalar Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Instalar Symfony CLI
 RUN wget https://get.symfony.com/cli/installer -O - | bash && \
@@ -30,14 +30,20 @@ RUN useradd -m -u 1000 appuser
 # Establecer directorio de trabajo
 WORKDIR /var/www
 
-# Copiar archivos de la aplicación
+# Copiar composer.json y composer.lock primero
+COPY --chown=appuser:appuser composer.json composer.lock ./
+
+# Instalar dependencias como root primero
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Copiar el resto de archivos
 COPY --chown=appuser:appuser . .
 
 # Cambiar al usuario no root
 USER appuser
 
-# Instalar dependencias
-RUN composer install --no-dev --optimize-autoloader
+# Ejecutar scripts post-install
+RUN composer run-script post-install-cmd
 
 # Exponer puerto
 EXPOSE 8000
