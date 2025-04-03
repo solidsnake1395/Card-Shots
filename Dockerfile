@@ -52,5 +52,8 @@ RUN composer dump-autoload --optimize
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
+# Exponer el puerto
+EXPOSE ${PORT:-8000}
+
 # Comando para iniciar la aplicación
-CMD ["symfony", "server:start", "--no-tls", "--port=8000"] 
+CMD ["php", "-S", "0.0.0.0:${PORT:-8000}", "-t", "public"] 
