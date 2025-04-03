@@ -36,6 +36,9 @@ COPY --chown=appuser:appuser composer.json composer.lock ./
 # Instalar dependencias como root primero
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
+# Instalar symfony/runtime específicamente
+RUN composer require symfony/runtime --no-scripts
+
 # Copiar el resto de archivos
 COPY --chown=appuser:appuser . .
 
