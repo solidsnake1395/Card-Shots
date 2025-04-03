@@ -3,13 +3,19 @@ services:
     name: cards-and-shots
     env: docker
     plan: free
+    buildCommand: composer install --no-dev --optimize-autoloader
+    startCommand: php -S 0.0.0.0:8000 -t public
     envVars:
       - key: APP_ENV
         value: prod
       - key: APP_SECRET
         value: changeme123
       - key: DATABASE_URL
-        value: mysql://mysql:castillo69@cardnshots-mysql:3306/cardnshots
+        value: mysql://root:root@host.docker.internal:3306/cardnshots
+      - key: MESSENGER_TRANSPORT_DSN
+        value: doctrine://default?auto_setup=0
+      - key: MAILER_DSN
+        value: null://null
 
   - type: mysql
     name: cardnshots-mysql
