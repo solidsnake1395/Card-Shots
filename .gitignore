@@ -23,3 +23,23 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+### Extras útiles ###
+# Node
+node_modules/
+dist/
+build/
+
+# IDEs y editores
+.idea/
+.vscode/
+*.swp
+
+# Archivos temporales
+*.log
+*.cache
+*.tmp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

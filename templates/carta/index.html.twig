@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carta index{% endblock %}
+
+{% block body %}
+    <h1>Carta index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Texto</th>
+                <th>Titulo</th>
+                <th>Imagen</th>
+                <th>Categoria</th>
+                <th>EsComodin</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cartum in cartas %}
+            <tr>
+                <td>{{ cartum.id }}</td>
+                <td>{{ cartum.texto }}</td>
+                <td>{{ cartum.titulo }}</td>
+                <td>{{ cartum.imagen }}</td>
+                <td>{{ cartum.categoria }}</td>
+                <td>{{ cartum.esComodin ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_carta_show', {'id': cartum.id}) }}">show</a>
+                    <a href="{{ path('app_carta_edit', {'id': cartum.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_carta_new') }}">Create new</a>
+{% endblock %}

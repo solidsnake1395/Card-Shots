@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cards n' shots{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{% endblock %}
+
+{% block header %}
+    <h1>CardsNshots</h1>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="container w-50 border m-auto mt-5 p-3">
+        <h1>{{ message }}</h1>
+        <p>Lucky number: {{ number }}</p>
+        <p>Current date: {{ date|date('Y-m-d H:i:s') }}</p>
+        <p>email {{ email }}</p>
+        {% if app.user %}
+            <form action="{{ path('logout') }}" method="post">
+                <button class="btn btn-outline-danger mt-2" type="submit">Cerrar sesión</button>
+            </form>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a href="{{ path('app_carta_index') }}">Gestionar cartas</a>
+            {% endif %}
+        {% endif %}
+
+    </div>
+{% endblock %}
