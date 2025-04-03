@@ -29,3 +29,4 @@ security:
         - { path: ^/, roles: ROLE_USER }
         - { path: ^/superadmin, roles: ROLE_SUPER_ADMIN }
         - { path: ^/carta, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/test-db, roles: PUBLIC_ACCESS }
