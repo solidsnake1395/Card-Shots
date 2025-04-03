@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: cards-and-shots
+    env: docker
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_SECRET
+        value: changeme123
