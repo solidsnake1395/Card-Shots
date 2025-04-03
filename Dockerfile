@@ -36,6 +36,9 @@ COPY --chown=appuser:appuser composer.json composer.lock ./
 # Instalar dependencias como root primero
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
+# Instalar symfony/runtime específicamente
+RUN composer require symfony/runtime --no-scripts
+
 # Copiar el resto de archivos
 COPY --chown=appuser:appuser . .
 
@@ -45,10 +48,13 @@ USER appuser
 # Configurar el entorno y ejecutar comandos necesarios
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
-RUN php bin/console cache:clear --env=prod --no-debug
+
+# Crear directorio de caché y dar permisos
+RUN mkdir -p var/cache/prod var/log && \
+    chmod -R 777 var/cache var/log
 
 # Exponer puerto
 EXPOSE 8000
 
 # Comando para iniciar la aplicación
-CMD ["php", "-S", "0.0.0.0:8000", "public/index.php"] 
+CMD ["symfony", "server:start", "--no-tls", "--port=8000"] 
