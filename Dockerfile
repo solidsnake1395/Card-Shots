@@ -55,4 +55,4 @@ ENV APP_DEBUG=0
 EXPOSE ${PORT:-8000}
 
 # Comando de inicio
-CMD ["php", "-S", "0.0.0.0:${PORT}", "-t", "public"]
+CMD /bin/sh -c "php -S 0.0.0.0:$PORT -t public"
