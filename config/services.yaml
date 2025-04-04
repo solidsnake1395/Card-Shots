@@ -1,6 +1,10 @@
 parameters:
 
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
     app.pdo_session_handler:
         class: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
         arguments:
