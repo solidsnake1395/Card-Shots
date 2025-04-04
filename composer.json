@@ -79,7 +79,8 @@
         "auto-scripts": {
             "cache:clear": "php bin/console cache:clear",
             "assets:install %PUBLIC_DIR%": "php bin/console assets:install public",
-            "importmap:install": "php bin/console importmap:install"
+            "importmap:install": "php bin/console importmap:install",
+            "@php bin/console cache:clear": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
