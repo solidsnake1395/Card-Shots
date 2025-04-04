@@ -77,9 +77,9 @@
     },
     "scripts": {
         "auto-scripts": {
-            "@php bin/console cache:clear": "script",
-            "@php bin/console assets:install %PUBLIC_DIR%": "script",
-            "@php bin/console importmap:install": "script"
+            "php bin/console cache:clear": "script",
+            "php bin/console assets:install %PUBLIC_DIR%": "script",
+            "php bin/console importmap:install": "script"
         },
         "post-install-cmd": [
             "@auto-scripts"
