@@ -26,8 +26,11 @@ RUN useradd -G www-data,root -u 1000 -d /home/appuser appuser \
 # Establecer directorio de trabajo
 WORKDIR /var/www
 
-# Copiar TODO el proyecto primero (incluye composer.json, lock, y bin/console)
+# Copiar TODO el proyecto primero (incluye composer.json, lock, src/, public/, etc.)
 COPY . .
+
+# 💡 IMPORTANTE: permitir ejecutar scripts de Composer como root
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Instalar dependencias
 RUN composer install --no-dev --optimize-autoloader --classmap-authoritative
