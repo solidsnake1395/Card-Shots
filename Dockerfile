@@ -20,8 +20,3 @@ EXPOSE 8000
 
 # Comando por defecto
 CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
-
-RUN mkdir -p /var/lib/php/sessions \
-    && chmod -R 777 /var/lib/php/sessions
-
-ENV PHP_SESSION_SAVE_PATH=/var/lib/php/sessions

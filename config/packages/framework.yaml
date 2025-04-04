@@ -1,12 +1,11 @@
+# config/packages/framework.yaml
 framework:
     secret: '%env(APP_SECRET)%'
-
-    # ✅ CSRF protection activada
     csrf_protection: true
 
-    # ✅ Configuración segura y explícita de sesiones
     session:
-        handler_id: null
+        storage_factory_id: session.storage.factory.native
         cookie_secure: auto
         cookie_samesite: lax
-        save_path: '%env(resolve:PHP_SESSION_SAVE_PATH)%'
+        cookie_lifetime: 0
+        cookie_httponly: true
