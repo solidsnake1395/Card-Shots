@@ -30,7 +30,7 @@ WORKDIR /var/www
 COPY composer.json composer.lock ./
 
 # Instalar dependencias
-RUN composer install --no-dev --optimize-autoloader --classmap-authoritative --no-scripts
+RUN composer install --no-dev --optimize-autoloader --classmap-authoritative
 
 
 # Copiar el resto del proyecto
