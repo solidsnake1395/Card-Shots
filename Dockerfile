@@ -26,15 +26,11 @@ RUN useradd -G www-data,root -u 1000 -d /home/appuser appuser \
 # Establecer directorio de trabajo
 WORKDIR /var/www
 
-# Copiar composer.json y composer.lock
-COPY composer.json composer.lock ./
+# Copiar TODO el proyecto primero (incluye composer.json, lock, y bin/console)
+COPY . .
 
 # Instalar dependencias
 RUN composer install --no-dev --optimize-autoloader --classmap-authoritative
-
-
-# Copiar el resto del proyecto
-COPY . .
 
 # Crear carpetas necesarias y dar permisos
 RUN mkdir -p var/cache var/log \
