@@ -9,3 +9,4 @@ framework:
         cookie_samesite: lax
         cookie_lifetime: 0
         cookie_httponly: true
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
