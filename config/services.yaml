@@ -12,6 +12,10 @@ services:
                 db_time_col: sess_time
                 db_lifetime_col: sess_lifetime
 
+    App\Security\UserProvider:
+        arguments:
+            $userRepository: '@App\Repository\UserRepository'
+
     App\:
         resource: '../src/'
         exclude:
