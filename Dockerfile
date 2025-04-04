@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-# Instalar dependencias del sistema
+# Instalar dependencias del sistema.
 RUN apt-get update && apt-get install -y \
     git \
     curl \
